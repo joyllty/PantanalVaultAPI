@@ -1,0 +1,6 @@
+@PantanalVaultAPI_HostAddress = http://localhost:5287
+
+GET {{PantanalVaultAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
