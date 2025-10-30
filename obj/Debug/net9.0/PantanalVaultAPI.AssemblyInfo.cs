@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PantanalVaultAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e314df0621d52fb46197ac2d8646d44b617bcc7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e27a65830e71c5dc13fd465d26779482e89b737f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PantanalVaultAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PantanalVaultAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

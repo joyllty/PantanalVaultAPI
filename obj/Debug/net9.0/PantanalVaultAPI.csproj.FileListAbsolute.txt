@@ -65,3 +65,4 @@ C:\Users\bruna\OneDrive\Desktop\bruna\studo\c-sharp\PantanalVaultAPI\obj\Debug\n
 C:\Users\bruna\OneDrive\Desktop\bruna\studo\c-sharp\PantanalVaultAPI\obj\Debug\net9.0\PantanalVaultAPI.pdb
 C:\Users\bruna\OneDrive\Desktop\bruna\studo\c-sharp\PantanalVaultAPI\obj\Debug\net9.0\PantanalVaultAPI.genruntimeconfig.cache
 C:\Users\bruna\OneDrive\Desktop\bruna\studo\c-sharp\PantanalVaultAPI\obj\Debug\net9.0\ref\PantanalVaultAPI.dll
+C:\Users\bruna\OneDrive\Desktop\bruna\studo\c-sharp\PantanalVaultAPI\obj\Debug\net9.0\PantanalVaultAPI.sourcelink.json
