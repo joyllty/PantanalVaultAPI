@@ -47,6 +47,6 @@ const deleteAlbum = async (id) => {
 
         // getAlbuns();
     } catch (error){
-        console.error(erro);
+        console.error(error);
     }
 };
