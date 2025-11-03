@@ -18,7 +18,7 @@ namespace PantanalVaultAPI
         public string? Duracao { get; set; }
         public string? Gravadora { get; set; }
         public string? Formato { get; set; }
-
+        public string? Faixas { get; set; }
     }
 }
 
