@@ -3,9 +3,13 @@ using PantanalVaultAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ADICIONAR POLÍTICA DE CORS
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=pantanal.db"));
 
 var app = builder.Build();
+
+// ADICIONAR USO DO CORS
 
 // GET
 
