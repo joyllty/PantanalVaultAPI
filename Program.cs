@@ -18,6 +18,24 @@ app.MapPost("/albuns", async (Album album, AppDbContext db) =>
 });
 
 // PUT
+app.MapPut("/albuns/{id}", async (int id, Album albumAtualizado, AppDbContext db) =>
+{
+    var album = await db.Albuns.FindAsync(id);
+    if (album is null) return Results.NotFound("Álbum não encontrado!");
+
+    album.Nome = albumAtualizado.Nome;
+    album.Artistas = albumAtualizado.Artistas;
+    album.Generos = albumAtualizado.Generos;
+    if (albumAtualizado.Colaboradores is not null) album.Colaboradores = albumAtualizado.Colaboradores;
+    album.DataLancamento = albumAtualizado.DataLancamento;
+    album.NumeroFaixas = albumAtualizado.NumeroFaixas;
+    album.Duracao = albumAtualizado.Duracao;
+    album.Gravadora = albumAtualizado.Gravadora;
+    album.Formato = albumAtualizado.Formato;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(album);
+});
 
 // PATCH
 app.MapPatch("/albuns/{id}", async (int id, Album albumAlteracoes, AppDbContext db) =>
@@ -44,7 +62,15 @@ app.MapPatch("/albuns/{id}", async (int id, Album albumAlteracoes, AppDbContext 
 
 
 // DELETE
+app.MapDelete("/albuns/{id}", async (int id, AppDbContext db) =>
+{
+    var album = await db.Albuns.FindAsync(id);
+    if (album is null) return Results.NotFound("Álbum não encontrado!");
 
+    db.Albuns.Remove(album);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
 
 
 
