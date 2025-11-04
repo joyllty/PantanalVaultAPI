@@ -1,10 +1,9 @@
 //fetchs
-// GET
-// const getAlbuns
 
-/*const listasAlbuns = document.getElementById('albuns-lista');
+const listaAlbuns = document.getElementById('albuns-lista');
 const apiURL = 'http://localhost:5287/albuns';
 
+// GET
 const getAlbuns = async () => {
     try {
         const response = await fetch(apiURL, {
@@ -18,9 +17,11 @@ const getAlbuns = async () => {
             throw new Error("Erro ao buscar os albuns!");
         }
 
-        const times = await response.json();
+        const albuns = await response.json();
+
+        // console.log(albuns);
         
-        albuns.foreach((album) => {
+        albuns.forEach((album) => {
             const newLi = document.createElement('li');
             newLi.innerText = `Nome: ${album.nome}`;
             listaAlbuns.appendChild(newLi);
@@ -29,10 +30,9 @@ const getAlbuns = async () => {
         } catch (error) {
             listaAlbuns.innerText = `${error.message}`;
         }
-    } */
+    } 
 
-    //console.log(fetchAPI);
-    //const apiURL = 'http://localhost:5287/albuns'
+getAlbuns();
 
 // POST
 const postAlbum = async (novoAlbum) => {
@@ -58,10 +58,7 @@ const postAlbum = async (novoAlbum) => {
         return null;
     }
 };
-    // POST
-    // const postAlbum
 
-    // PUT
 // PUT
 const putAlbum = async (id, albumAtualizado) => {
     try {
@@ -115,23 +112,26 @@ const patchAlbum = async (id, albumAlteracoes) => {
         return null;
     }
 };
-    // DELETE
-    const deleteAlbum = async (id) => {
-        try {
-            const response = await fetch(`${apiURL}/${id}`, {
-                method: 'DELETE'
-            });
 
-            if (response.status === 404) {
-                throw new Error("Álbum não encontrado!");
-            }
+// DELETE
+const deleteAlbum = async (id) => {
+    try {
+        const response = await fetch(`${apiURL}/${id}`, {
+            method: 'DELETE'
+        });
 
-            if (!response.ok) {
-                throw new Error("Erro ao excluir o álbum!");
-            }
-
-            // getAlbuns();
-        } catch (error) {
-            console.error(error);
+        if (response.status === 404) {
+            throw new Error("Álbum não encontrado!");
         }
-    };
+
+        if (!response.ok) {
+            throw new Error("Erro ao excluir o álbum!");
+        }
+
+        // getAlbuns();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
