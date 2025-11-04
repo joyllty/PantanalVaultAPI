@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pantanal Vault</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-     
-    <ul id="albuns-lista"></ul>
+    <header>
+        <div class="top-title">
+        <h1>Pantanal Vault 🎧</h1>
+        <p>Da um bisu nesses álbuns :)</p>
+        </div>
+
+        <div class="top-buttons">
+            <button id="btn-editar" onclick="window.location.href='./editaralbum.html'">Editar álbum</button>
+            <button id="btn-excluir" onclick="window.location.href='./excluiralbum.html'">Excluir álbum</button>
+            <button id="btn-novo" onclick="window.location.href='./novoalbum.html'">Adicionar novo álbum</button>
+        </div>
+        
+    </header>
+
+    <main>
+        <h2 class="catalogo-titulo">Catálogo de Álbuns</h2>
+        <div id="albuns-container" class="cards-container"></div>
+    </main>
+
+    <footer>
+        <p>© Bruna Chapelin | Lanna dos Anjos | Luísa Koerich</p>
+    </footer>
+
     <script src="./script.js"></script>
 </body>
 </html>

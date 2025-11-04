@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1.5rem 2rem;
+  background-color: #222;
+  color: #fefefe;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.top-title {
+  display: flex;
+  flex-direction: column; /* título e subtítulo em coluna */
+  align-items: flex-start; /* alinhados à esquerda */
+}
+
+.top-title h1 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.top-title p {
+  opacity: 0.8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.top-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items:flex-end;
+  
+}
+
+.top-buttons button {
+  background-color: #254935;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.0rem;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.top-buttons button:hover {
+  background-color: #386f51;
+  transform: translateY(-2px);
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.catalogo-titulo {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 1rem;
+}
+
+.card-info h3 {
+  font-size: 1rem;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+.card-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.3rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  background-color: #222;
+  color: #fefefe;
+}

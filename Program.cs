@@ -60,7 +60,7 @@ app.MapPut("/albuns/{id}", async (int id, Album albumAtualizado, AppDbContext db
     album.Nome = albumAtualizado.Nome;
     album.Artistas = albumAtualizado.Artistas;
     album.Generos = albumAtualizado.Generos;
-    if (albumAtualizado.Colaboradores is not null) album.Colaboradores = albumAtualizado.Colaboradores;
+    album.Colaboradores = albumAtualizado.Colaboradores;
     album.DataLancamento = albumAtualizado.DataLancamento;
     album.NumeroFaixas = albumAtualizado.NumeroFaixas;
     album.Duracao = albumAtualizado.Duracao;
@@ -105,7 +105,6 @@ app.MapDelete("/albuns/{id}", async (int id, AppDbContext db) =>
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
-
 
 
 app.Run();

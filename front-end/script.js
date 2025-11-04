@@ -1,7 +1,10 @@
 //fetchs
 
 const listaAlbuns = document.getElementById('albuns-lista');
+const container = document.getElementById('albuns-container');
 const apiURL = 'http://localhost:5287/albuns';
+
+
 
 // GET
 const getAlbuns = async () => {
@@ -19,18 +22,55 @@ const getAlbuns = async () => {
 
         const albuns = await response.json();
 
+        container.innerHTML = '';
+
         // console.log(albuns);
-        
+        /*
         albuns.forEach((album) => {
             const newLi = document.createElement('li');
             newLi.innerText = `Nome: ${album.nome}`;
             listaAlbuns.appendChild(newLi);
         })
+        */
 
-        } catch (error) {
-            listaAlbuns.innerText = `${error.message}`;
-        }
-    } 
+        albuns.forEach((album, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const baseName = album.nome
+                ? album.nome
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '')
+                : "sem-nome";
+
+            const jpgPath = `./img/${baseName}.jpg`;
+
+            const img = new Image();
+            img.src = jpgPath;
+
+            card.appendChild(img);
+
+            const info = document.createElement("div");
+            info.classList.add("card-info");
+            info.innerHTML = `
+                <h3>${album.nome}</h3>
+                <p><strong>ID:</strong> ${album.id}</p>
+                <p><strong>Artista:</strong> ${album.artistas || '---'}</p>
+                <p><strong>Lançamento:</strong> ${album.dataLancamento || '---'}</p>
+            `;
+            card.appendChild(info);
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        // listaAlbuns.innerText = `${error.message}`;
+        container.innerText = `${error.message}`;
+    }
+};
 
 getAlbuns();
 
