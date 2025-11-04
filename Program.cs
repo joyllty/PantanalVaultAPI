@@ -4,24 +4,31 @@ using PantanalVaultAPI;
 var builder = WebApplication.CreateBuilder(args);
 
 // ADICIONAR POLÍTICA DE CORS
-//builder.Services.AddCors(options =>
-//{
-  //  options.AddDefaultPolicy(policy =>
-//    {
-        //policy.AllowAnyOrigin()
-      //  .AllowAnyHeader()
-    //    .AllowAnyMethod();
-  //  });
-//});
+builder.Services.AddCors(options =>
+    {
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=pantanal.db"));
 
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // ADICIONAR USO DO CORS
+app.UseCors();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // GET all
 app.MapGet("/albuns", async (AppDbContext db) =>

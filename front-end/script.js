@@ -1,8 +1,38 @@
-// fetchs
-const apiURL = 'http://localhost:5287/albuns'
-
+//fetchs
 // GET
 // const getAlbuns
+
+/*const listasAlbuns = document.getElementById('albuns-lista');
+const apiURL = 'http://localhost:5287/albuns';
+
+const getAlbuns = async () => {
+    try {
+        const response = await fetch(apiURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }); 
+
+        if (!response.ok){
+            throw new Error("Erro ao buscar os albuns!");
+        }
+
+        const times = await response.json();
+        
+        albuns.foreach((album) => {
+            const newLi = document.createElement('li');
+            newLi.innerText = `Nome: ${album.nome}`;
+            listaAlbuns.appendChild(newLi);
+        })
+
+        } catch (error) {
+            listaAlbuns.innerText = `${error.message}`;
+        }
+    } */
+
+    //console.log(fetchAPI);
+    //const apiURL = 'http://localhost:5287/albuns'
 
 // POST
 const postAlbum = async (novoAlbum) => {
@@ -28,7 +58,10 @@ const postAlbum = async (novoAlbum) => {
         return null;
     }
 };
+    // POST
+    // const postAlbum
 
+    // PUT
 // PUT
 const putAlbum = async (id, albumAtualizado) => {
     try {
@@ -36,39 +69,21 @@ const putAlbum = async (id, albumAtualizado) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(albumAtualizado)
         });
-        
-        if (!response.ok){
+
+        if (!response.ok) {
             throw new Error("Erro ao atualizar o álbum!");
         }
 
         const resultado = await response.json();
         console.log("Álbum atualizado: ", resultado);
+        return resultado;
 
-    } catch (error){
+    } catch (error) {
         console.error(error);
-    }
-};
-
-// DELETE
-const deleteAlbum = async (id) => {
-    try {
-        const response = await fetch(`${apiURL}/${id}`, {
-            method: 'DELETE'
-        });
-
-        if (response.status === 404){
-            throw new Error("Álbum não encontrado!");
-        } 
-
-        if (!response.ok){
-            throw new Error("Erro ao excluir o álbum!");
-        }
-
-        // getAlbuns();
-    } catch (error){
-        console.error(error);
+        return null;
     }
 };
 
@@ -100,3 +115,23 @@ const patchAlbum = async (id, albumAlteracoes) => {
         return null;
     }
 };
+    // DELETE
+    const deleteAlbum = async (id) => {
+        try {
+            const response = await fetch(`${apiURL}/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.status === 404) {
+                throw new Error("Álbum não encontrado!");
+            }
+
+            if (!response.ok) {
+                throw new Error("Erro ao excluir o álbum!");
+            }
+
+            // getAlbuns();
+        } catch (error) {
+            console.error(error);
+        }
+    };
