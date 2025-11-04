@@ -9,13 +9,12 @@ const apiURL = 'http://localhost:5287/albuns'
 
 // PUT
 const putAlbum = async (id, albumAtualizado) => {
-    try{
+    try {
         const response = await fetch(`${apiURL}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(albumAtualizado)
+            }
         });
         
         if (!response.ok){

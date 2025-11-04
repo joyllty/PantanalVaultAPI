@@ -10,17 +10,45 @@ POST http://localhost:5287/albuns/
 Content-Type: application/json
 
 {
-    "Nome": "The Perfect Velvet",
-    "Artistas": "Red Velvet",
-    "Generos": "Kpop, R&B",
-    "Colaboradores": "-",
+    "Nome": "qualquer album",
+    "Artistas": "aaaaaaa",
+    "Generos": "bbbbbb",
+    "Colaboradores": "3",
     "DataLancamento": "29-01-2018",
-    "NumeroFaixas": 12,
+    "NumeroFaixas": 10,
     "Duracao": "41:36",
-    "Gravadora": "SM Entertainment",
+    "Gravadora": "cccccc",
     "Formato": "Álbum"
 }
 
 ###
 
-DELETE http://localhost:5287/albuns/1
+PUT http://localhost:5287/albuns/11
+Content-Type: application/json
+
+{
+    "Nome": "qualquer albumm",
+    "Artistas": "aaa",
+    "Generos": "bbb",
+    "Colaboradores": "3",
+    "DataLancamento": "29-01-2018",
+    "NumeroFaixas": 5,
+    "Duracao": "40:00",
+    "Gravadora": "ccc",
+    "Formato": "Álbum"
+}
+
+### 
+
+PATCH http://localhost:5287/albuns/11
+Content-Type: application/json
+
+{
+    "Generos": "ddd",
+    "DataLancamento": "30-02-2018",
+    "NumeroFaixas": 15,
+    "Gravadora": "eee"
+}
+
+###
+DELETE http://localhost:5287/albuns/11
