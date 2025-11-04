@@ -24,7 +24,8 @@ namespace PantanalVaultAPI.Migrations
                     NumeroFaixas = table.Column<int>(type: "INTEGER", nullable: false),
                     Duracao = table.Column<string>(type: "TEXT", nullable: true),
                     Gravadora = table.Column<string>(type: "TEXT", nullable: true),
-                    Formato = table.Column<string>(type: "TEXT", nullable: true)
+                    Formato = table.Column<string>(type: "TEXT", nullable: true),
+                    Faixas = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

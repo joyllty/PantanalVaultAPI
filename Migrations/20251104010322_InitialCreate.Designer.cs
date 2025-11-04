@@ -10,8 +10,8 @@ using PantanalVaultAPI;
 namespace PantanalVaultAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251101173523_remove_propriedade_colaboradores")]
-    partial class removepropriedadecolaboradores
+    [Migration("20251104010322_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,16 @@ namespace PantanalVaultAPI.Migrations
                     b.Property<string>("Artistas")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Colaboradores")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("DataLancamento")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Duracao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Faixas")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Formato")
