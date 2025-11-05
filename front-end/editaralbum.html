@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Álbum</title>
+  <link rel="icon" type="image/png" href="./img/onca.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -57,7 +58,24 @@
       <p id="mensagemEditar" class="form-message"></p>
     </form>
   </main>
-
   <script src="script.js"></script>
+  <script>
+  // quando abrir a edição, verifica se veio um id na URL
+  document.addEventListener('DOMContentLoaded', () => {
+    const albumId = getParametroURL('id');
+    if (albumId) {
+      const campoId = document.getElementById('idBusca');
+      const botaoBuscar = document.getElementById('btnBuscar');
+
+      campoId.value = albumId;
+
+      // garantir que o script principal carregou
+      setTimeout(() => {
+        botaoBuscar.click();
+      }, 300);
+    }
+  });
+</script>
+
 </body>
 </html>

@@ -201,7 +201,7 @@ footer {
   color: #fefefe;
 }
 
-/* Detalhes do Álbum */
+/* detalhes do álbum */
 .album-detalhes {
     max-width: 800px;
     margin: 2rem auto;
@@ -280,7 +280,6 @@ footer {
     justify-content: center;
 }
 
-/* Cards clicáveis */
 .card {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;

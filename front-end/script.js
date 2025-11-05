@@ -8,6 +8,8 @@ const apiURL = 'http://localhost:5287/albuns';
 
 // GET
 const getAlbuns = async () => {
+    if (!container) return;  
+
     try {
         const response = await fetch(apiURL, {
             method: 'GET',
@@ -21,10 +23,9 @@ const getAlbuns = async () => {
         }
 
         const albuns = await response.json();
-
         container.innerHTML = '';
 
-        albuns.forEach((album, index) => {
+        albuns.forEach((album) => {
             const card = document.createElement('div');
             card.classList.add('card');
             
@@ -43,12 +44,10 @@ const getAlbuns = async () => {
                 : "sem-nome";
 
             const jpgPath = `./img/${baseName}.jpg`;
-
             const img = new Image();
             img.src = jpgPath;
 
             card.appendChild(img);
-
             const info = document.createElement("div");
             info.classList.add("card-info");
             info.innerHTML = `
@@ -58,12 +57,12 @@ const getAlbuns = async () => {
                 <p><strong>Lançamento:</strong> ${album.dataLancamento || '---'}</p>
             `;
             card.appendChild(info);
-
             container.appendChild(card);
         });
 
     } catch (error) {
-        container.innerText = `${error.message}`;
+        // só exibe se estivermos no index
+        if (container) container.innerText = `${error.message}`;
     }
 };
 
@@ -104,6 +103,10 @@ const putAlbum = async (id, albumAtualizado) => {
             },
             body: JSON.stringify(albumAtualizado)
         });
+
+        if (response.status === 404) {
+            throw new Error("Álbum não encontrado!");
+        }
 
         if (!response.ok) {
             throw new Error("Erro ao atualizar o álbum!");
@@ -169,36 +172,6 @@ const deleteAlbum = async (id) => {
     }
 };
 
-function tornarCardsClicaveis() {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', function() {
-            // acha os textso do card
-            const textElements = this.querySelectorAll('p');
-            let albumId = null;
-            
-            // procura elemento com id
-            textElements.forEach(element => {
-                if (element.innerHTML.includes('ID:')) {
-                    const match = element.innerHTML.match(/ID:\s*(\d+)/);
-                    if (match) {
-                        albumId = match[1];
-                    }
-                }
-            });
-            
-            console.log('ID encontrado:', albumId);
-            
-            if (albumId) {
-                window.location.href = `albumsolo.html?id=${albumId}`;
-            } else {
-                console.error('Não foi possível encontrar o ID do álbum');
-            }
-        });
-    });
-}
-    
 // get do album solo
 const getAlbumById = async (id) => {
     try {
@@ -237,7 +210,7 @@ function configurarFormularioNovoAlbum() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
+        
         const novoAlbum = {
             nome: document.getElementById('nome').value,
             artistas: document.getElementById('artistas').value,
@@ -251,14 +224,13 @@ function configurarFormularioNovoAlbum() {
         };
 
         const albumCriado = await postAlbum(novoAlbum);
+
         if (albumCriado) {
             msg.textContent = "Álbum criado com sucesso!";
             msg.style.color = "#254935";
             form.reset();
             
-            setTimeout(() => {
-                window.location.href = './index.html';
-            }, 2000);
+            window.location.assign("index.html");
             
         } else {
             msg.textContent = "Erro ao criar o álbum.";
@@ -279,8 +251,8 @@ function configurarPaginaEditar() {
     btnBuscar.addEventListener('click', async () => {
         const id = document.getElementById('idBusca').value.trim();
         if (!id) {
-            msgBusca.textContent = "Informe um ID!";
-            msgBusca.style.color = "red";
+            msgBusca.textContent = 'Informe um ID!';
+            msgBusca.style.color = 'red';
             return;
         }
 
@@ -304,13 +276,15 @@ function configurarPaginaEditar() {
                 formEditar.style.display = "block";
                 msgBusca.textContent = "Preencha os campos a alterar!";
                 msgBusca.style.color = "#254935";
+
             } else {
                 throw new Error("Álbum não encontrado");
             }
+
         } catch (err) {
             msgBusca.textContent = err.message;
             msgBusca.style.color = "red";
-            formEditar.style.display = "none";
+            
         }
     });
 
@@ -336,6 +310,7 @@ function configurarPaginaEditar() {
         const todosPreenchidos = Object.values(dados).every(v => v !== "" && v !== 0);
 
         let resultado;
+        
         if (todosPreenchidos) {
             resultado = await putAlbum(id, dados);
         } else {
@@ -343,6 +318,7 @@ function configurarPaginaEditar() {
             for (const key in dados) {
                 if (dados[key] !== "" && dados[key] !== 0) alteracoes[key] = dados[key];
             }
+            
             resultado = await patchAlbum(id, alteracoes);
         }
 
@@ -350,9 +326,7 @@ function configurarPaginaEditar() {
             msgEditar.textContent = "Álbum atualizado com sucesso! Redirecionando...";
             msgEditar.style.color = "#254935";
 
-            setTimeout(() => {
-                window.location.replace('/index.html');
-            }, 1000);
+            window.location.assign("index.html");
 
         } else {
             msgEditar.textContent = "Erro ao atualizar o álbum.";
@@ -361,7 +335,7 @@ function configurarPaginaEditar() {
     });
 }
 
-// 🔹 único listener necessário
+// único listener necessário
 document.addEventListener('DOMContentLoaded', function() {
     configurarFormularioNovoAlbum();
     configurarPaginaEditar();
