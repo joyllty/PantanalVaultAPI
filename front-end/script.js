@@ -24,18 +24,14 @@ const getAlbuns = async () => {
 
         container.innerHTML = '';
 
-        // console.log(albuns);
-        /*
-        albuns.forEach((album) => {
-            const newLi = document.createElement('li');
-            newLi.innerText = `Nome: ${album.nome}`;
-            listaAlbuns.appendChild(newLi);
-        })
-        */
-
         albuns.forEach((album, index) => {
             const card = document.createElement('div');
             card.classList.add('card');
+            
+            // Torna o card clicável
+            card.onclick = () => {
+                window.location.href = `albumsolo.html?id=${album.id}`;
+            };
 
             const baseName = album.nome
                 ? album.nome
@@ -67,7 +63,6 @@ const getAlbuns = async () => {
         });
 
     } catch (error) {
-        // listaAlbuns.innerText = `${error.message}`;
         container.innerText = `${error.message}`;
     }
 };
@@ -174,4 +169,61 @@ const deleteAlbum = async (id) => {
     }
 };
 
+function tornarCardsClicaveis() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function() {
+            // Encontra todos os elementos de texto do card
+            const textElements = this.querySelectorAll('p');
+            let albumId = null;
+            
+            // Procura pelo elemento que contém o ID
+            textElements.forEach(element => {
+                if (element.innerHTML.includes('ID:')) {
+                    const match = element.innerHTML.match(/ID:\s*(\d+)/);
+                    if (match) {
+                        albumId = match[1];
+                    }
+                }
+            });
+            
+            console.log('ID encontrado:', albumId);
+            
+            if (albumId) {
+                window.location.href = `albumsolo.html?id=${albumId}`;
+            } else {
+                console.error('Não foi possível encontrar o ID do álbum');
+            }
+        });
+    });
+}
     
+// GET por ID - para a página de detalhes
+const getAlbumById = async (id) => {
+    try {
+        const response = await fetch(`${apiURL}/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar álbum!");
+        }
+
+        const album = await response.json();
+        return album;
+
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+// Função para obter parâmetro da URL (usada na página de detalhes)
+function getParametroURL(nome) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nome);
+}

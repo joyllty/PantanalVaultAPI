@@ -200,3 +200,106 @@ footer {
   background-color: #222;
   color: #fefefe;
 }
+
+/* Detalhes do Álbum */
+.album-detalhes {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.album-header {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #254935, #386f51);
+    color: white;
+}
+
+.album-capa {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.album-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.album-titulo {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.album-artista {
+    font-size: 1.4rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.album-metadata {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.metadata-item {
+    margin-bottom: 1rem;
+}
+
+.metadata-label {
+    font-weight: 600;
+    color: #254935;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metadata-value {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.acoes-album {
+    padding: 1rem 2rem;
+    background: #f5f7fa;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Cards clicáveis */
+.card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+    .album-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .album-capa {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+}

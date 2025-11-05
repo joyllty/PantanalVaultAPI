@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Álbum - Pantanal Vault</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <div class="top-title">
+            <h1>Pantanal Vault 🎧</h1>
+            <p>Detalhes do Álbum</p>
+        </div>
+
+        <div class="top-buttons">
+            <button onclick="window.location.href='./index.html'">Voltar ao Catálogo</button>
+            <button onclick="editarAlbum()" class="btn-green">Editar Álbum</button>
+            <button onclick="excluirAlbum()" class="btn-red">Excluir Álbum</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="album-container" class="album-detalhes">
+            <!-- Os dados do álbum serão carregados aqui via JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <p>© Bruna Chapelin | Lanna dos Anjos | Luísa Koerich</p>
+    </footer>
+
+    <script src="./script.js"></script>
+    <script>
+        // Funções específicas da página de detalhes
+        function carregarDetalhesAlbum() {
+            const albumId = getParametroURL('id');
+            
+            if (!albumId) {
+                alert('Álbum não encontrado!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            getAlbumById(albumId).then(album => {
+                if (album) {
+                    exibirDetalhesAlbum(album);
+                } else {
+                    alert('Erro ao carregar álbum!');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        function exibirDetalhesAlbum(album) {
+            const container = document.getElementById('album-container');
+            
+            const baseName = album.nome
+                ? album.nome
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '')
+                : "sem-nome";
+            
+            const jpgPath = `./img/${baseName}.jpg`;
+
+            container.innerHTML = `
+                <div class="album-header">
+                    <img src="${jpgPath}" alt="${album.nome}" class="album-capa" 
+                         onerror="this.src='./img/sem-nome.jpg'">
+                    <div class="album-info">
+                        <h1 class="album-titulo">${album.nome || 'Sem nome'}</h1>
+                        <p class="album-artista">${album.artistas || 'Artista não informado'}</p>
+                        <p><strong>ID:</strong> ${album.id}</p>
+                    </div>
+                </div>
+                
+                <div class="album-metadata">
+                    <div class="metadata-item">
+                        <div class="metadata-label">Gêneros</div>
+                        <div class="metadata-value">${album.generos || '---'}</div>
+                    </div>
+                    
+                    <div class="metadata-item">
+                        <div class="metadata-label">Data de Lançamento</div>
+                        <div class="metadata-value">${album.dataLancamento || '---'}</div>
+                    </div>
+                    
+                    <div class="metadata-item">
+                        <div class="metadata-label">Número de Faixas</div>
+                        <div class="metadata-value">${album.numeroFaixas || '0'}</div>
+                    </div>
+                    
+                    <div class="metadata-item">
+                        <div class="metadata-label">Duração</div>
+                        <div class="metadata-value">${album.duracao || '---'}</div>
+                    </div>
+                    
+                    <div class="metadata-item">
+                        <div class="metadata-label">Gravadora</div>
+                        <div class="metadata-value">${album.gravadora || '---'}</div>
+                    </div>
+                    
+                    <div class="metadata-item">
+                        <div class="metadata-label">Formato</div>
+                        <div class="metadata-value">${album.formato || '---'}</div>
+                    </div>
+                    
+                    <div class="metadata-item" style="grid-column: 1 / -1;">
+                        <div class="metadata-label">Colaboradores</div>
+                        <div class="metadata-value">${album.colaboradores || '---'}</div>
+                    </div>
+                </div>
+                
+                <div class="acoes-album">
+                    <button onclick="editarAlbum()" class="btn-green">Editar Álbum</button>
+                    <button onclick="excluirAlbum()" class="btn-red">Excluir Álbum</button>
+                </div>
+            `;
+        }
+
+        function editarAlbum() {
+            const albumId = getParametroURL('id');
+            window.location.href = `editaralbum.html?id=${albumId}`;
+        }
+
+        function excluirAlbum() {
+            const albumId = getParametroURL('id');
+            if (confirm('Tem certeza que deseja excluir este álbum?')) {
+                window.location.href = `excluiralbum.html?id=${albumId}`;
+            }
+        }
+
+        // Carregar detalhes quando a página abrir
+        carregarDetalhesAlbum();
+    </script>
+</body>
+</html>

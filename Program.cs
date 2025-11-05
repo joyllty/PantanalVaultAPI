@@ -39,8 +39,8 @@ app.MapGet("/albuns", async (AppDbContext db) =>
 // GET ID
 app.MapGet("/albuns/{id}", async (int id, AppDbContext db) =>
 {
-    var album = await db.Albuns.FindAsync(id);  
-    return album is not null ? Results.Ok(album) : Results.NotFound("Álbum não encontrado!");
+    var album = await db.Albuns.FindAsync(id);
+    return album != null ? Results.Ok(album) : Results.NotFound();
 });
 
 // POST
