@@ -227,3 +227,47 @@ function getParametroURL(nome) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(nome);
 }
+
+// Função para lidar com o formulário de novo álbum
+function configurarFormularioNovoAlbum() {
+    const form = document.getElementById('formNovoAlbum');
+    const msg = document.getElementById('mensagem');
+
+    if (!form) return; // Só executa se estiver na página correta
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const novoAlbum = {
+            nome: document.getElementById('nome').value,
+            artistas: document.getElementById('artistas').value,
+            generos: document.getElementById('generos').value,
+            colaboradores: document.getElementById('colaboradores').value,
+            dataLancamento: document.getElementById('dataLancamento').value,
+            numeroFaixas: Number(document.getElementById('numeroFaixas').value) || 0,
+            duracao: document.getElementById('duracao').value,
+            gravadora: document.getElementById('gravadora').value,
+            formato: document.getElementById('formato').value
+        };
+
+        const albumCriado = await postAlbum(novoAlbum);
+        if (albumCriado) {
+            msg.textContent = "Álbum criado com sucesso!";
+            msg.style.color = "#254935";
+            form.reset();
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+            
+        } else {
+            msg.textContent = "Erro ao criar o álbum.";
+            msg.style.color = "#c62828";
+        }
+    });
+}
+
+// Executa quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    configurarFormularioNovoAlbum();
+});
