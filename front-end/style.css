@@ -117,6 +117,82 @@ main {
   margin-bottom: 0.3rem;
 }
 
+/* adicionar, editar e excluir */
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-container label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-container input:focus {
+  outline: none;
+  border-color: #254935;
+  box-shadow: 0 0 4px rgba(37, 73, 53, 0.3);
+}
+
+.btn-green {
+  background-color: #254935;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-green:hover {
+  background-color: #386f51;
+  transform: translateY(-2px);
+}
+
+.btn-red {
+  background-color: #c62828;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-red:hover {
+  background-color: #e53935;
+  transform: translateY(-2px);
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.form-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
 footer {
   text-align: center;
   padding: 1rem;

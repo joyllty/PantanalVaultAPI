@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Novo Álbum</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="top-title">
+      <h1>Adicionar Novo Álbum</h1>
+      <p>Cadastre um novo álbum no catálogo</p>
+    </div>
+    <div class="top-buttons">
+      <a href="index.html"><button>Voltar</button></a>
+    </div>
+  </header>
+
+  <main>
+    <form id="formNovoAlbum" class="form-container" enctype="multipart/form-data">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" required>
+
+      <label for="artistas">Artistas</label>
+      <input type="text" id="artistas" required>
+
+      <label for="generos">Gêneros</label>
+      <input type="text" id="generos">
+
+      <label for="colaboradores">Colaboradores</label>
+      <input type="text" id="colaboradores">
+
+      <label for="dataLancamento">Data de Lançamento</label>
+      <input type="date" id="dataLancamento">
+
+      <label for="numeroFaixas">Número de Faixas</label>
+      <input type="number" id="numeroFaixas" min="1">
+
+      <label for="duracao">Duração</label>
+      <input type="text" id="duracao" placeholder="Ex: 47:25">
+
+      <label for="gravadora">Gravadora</label>
+      <input type="text" id="gravadora">
+
+      <label for="formato">Formato</label>
+      <input type="text" id="formato" placeholder="Ex: Vinil, CD, Digital">
+
+      <label for="imagem">Imagem (JPG)</label>
+      <input type="file" id="imagem" accept="image/jpeg">
+
+      <button type="submit" class="btn-green">Adicionar Álbum</button>
+      <p id="mensagem" class="form-message"></p>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    const form = document.getElementById('formNovoAlbum');
+    const msg = document.getElementById('mensagem');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const novoAlbum = {
+        nome: nome.value,
+        artistas: artistas.value,
+        generos: generos.value,
+        colaboradores: colaboradores.value,
+        dataLancamento: dataLancamento.value,
+        numeroFaixas: Number(numeroFaixas.value) || 0,
+        duracao: duracao.value,
+        gravadora: gravadora.value,
+        formato: formato.value
+      };
+
+      const albumCriado = await postAlbum(novoAlbum);
+      if (albumCriado) {
+        msg.textContent = "Álbum criado com sucesso!";
+        form.reset();
+      } else {
+        msg.textContent = "Erro ao criar o álbum.";
+      }
+    });
+  </script>
+</body>
+</html>
