@@ -28,7 +28,7 @@ const getAlbuns = async () => {
             const card = document.createElement('div');
             card.classList.add('card');
             
-            // Torna o card clicável
+            // p poder clicar
             card.onclick = () => {
                 window.location.href = `albumsolo.html?id=${album.id}`;
             };
@@ -174,11 +174,11 @@ function tornarCardsClicaveis() {
     cards.forEach(card => {
         card.style.cursor = 'pointer';
         card.addEventListener('click', function() {
-            // Encontra todos os elementos de texto do card
+            // acha os textso do card
             const textElements = this.querySelectorAll('p');
             let albumId = null;
             
-            // Procura pelo elemento que contém o ID
+            // procura elemento com id
             textElements.forEach(element => {
                 if (element.innerHTML.includes('ID:')) {
                     const match = element.innerHTML.match(/ID:\s*(\d+)/);
@@ -199,7 +199,7 @@ function tornarCardsClicaveis() {
     });
 }
     
-// GET por ID - para a página de detalhes
+// get do album solo
 const getAlbumById = async (id) => {
     try {
         const response = await fetch(`${apiURL}/${id}`, {
@@ -222,18 +222,18 @@ const getAlbumById = async (id) => {
     }
 };
 
-// Função para obter parâmetro da URL (usada na página de detalhes)
+// cata o parametro
 function getParametroURL(nome) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(nome);
 }
 
-// Função para lidar com o formulário de novo álbum
+// forms p add album
 function configurarFormularioNovoAlbum() {
     const form = document.getElementById('formNovoAlbum');
     const msg = document.getElementById('mensagem');
 
-    if (!form) return; // Só executa se estiver na página correta
+    if (!form) return; // so faz na pag certa
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -267,7 +267,99 @@ function configurarFormularioNovoAlbum() {
     });
 }
 
-// Executa quando a página carrega
+// faz qnd a pag carrega
 document.addEventListener('DOMContentLoaded', function() {
     configurarFormularioNovoAlbum();
+});
+
+// config editar album
+function configurarPaginaEditar() {
+    const btnBuscar = document.getElementById('btnBuscar');
+    const formEditar = document.getElementById('formEditar');
+    const msgBusca = document.getElementById('statusBusca');
+    const msgEditar = document.getElementById('mensagemEditar');
+
+    if (!btnBuscar) return;
+
+    btnBuscar.addEventListener('click', async () => {
+        const id = document.getElementById('idBusca').value.trim();
+        if (!id) {
+            msgBusca.textContent = "Informe um ID!";
+            msgBusca.style.color = "red";
+            return;
+        }
+
+        msgBusca.textContent = "Buscando...";
+        msgBusca.style.color = "#254935";
+        
+        try {
+            const album = await getAlbumById(id);
+            
+            if (album) {
+                document.getElementById('nome').value = album.nome || "";
+                document.getElementById('artistas').value = album.artistas || "";
+                document.getElementById('generos').value = album.generos || "";
+                document.getElementById('colaboradores').value = album.colaboradores || "";
+                document.getElementById('dataLancamento').value = album.dataLancamento ? album.dataLancamento.substring(0,10) : "";
+                document.getElementById('numeroFaixas').value = album.numeroFaixas || "";
+                document.getElementById('duracao').value = album.duracao || "";
+                document.getElementById('gravadora').value = album.gravadora || "";
+                document.getElementById('formato').value = album.formato || "";
+
+                formEditar.style.display = "block";
+                msgBusca.textContent = "Álbum encontrado!";
+                msgBusca.style.color = "#254935";
+            } else {
+                throw new Error("Álbum não encontrado");
+            }
+        } catch (err) {
+            msgBusca.textContent = err.message;
+            msgBusca.style.color = "red";
+            formEditar.style.display = "none";
+        }
+    });
+
+    document.getElementById('btnSalvar').addEventListener('click', async () => {
+        const id = document.getElementById('idBusca').value.trim();
+        if (!id) return;
+
+        const dados = {
+            nome: document.getElementById('nome').value,
+            artistas: document.getElementById('artistas').value,
+            generos: document.getElementById('generos').value,
+            colaboradores: document.getElementById('colaboradores').value,
+            dataLancamento: document.getElementById('dataLancamento').value,
+            numeroFaixas: Number(document.getElementById('numeroFaixas').value) || 0,
+            duracao: document.getElementById('duracao').value,
+            gravadora: document.getElementById('gravadora').value,
+            formato: document.getElementById('formato').value
+        };
+
+        const todosPreenchidos = Object.values(dados).every(v => v !== "" && v !== 0);
+
+        let resultado;
+        if (todosPreenchidos) {
+            resultado = await putAlbum(id, dados); // atualização completa
+        } else {
+            // envia apenas os campos preenchidos
+            const alteracoes = {};
+            for (const key in dados) {
+                if (dados[key] !== "" && dados[key] !== 0) alteracoes[key] = dados[key];
+            }
+            resultado = await patchAlbum(id, alteracoes); // atualização parcial
+        }
+
+        if (resultado) {
+            msgEditar.textContent = "Álbum atualizado com sucesso!";
+            msgEditar.style.color = "#254935";
+        } else {
+            msgEditar.textContent = "Erro ao atualizar o álbum.";
+            msgEditar.style.color = "red";
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    configurarFormularioNovoAlbum();
+    configurarPaginaEditar();
 });

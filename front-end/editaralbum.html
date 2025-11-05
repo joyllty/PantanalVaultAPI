@@ -18,7 +18,6 @@
   </header>
 
   <main>
-
     <section class="form-container" id="busca-section">
       <label for="idBusca">ID do Álbum</label>
       <input type="number" id="idBusca" placeholder="Digite o ID do álbum">
@@ -60,81 +59,5 @@
   </main>
 
   <script src="script.js"></script>
-  <script>
-    const btnBuscar = document.getElementById('btnBuscar');
-    const formEditar = document.getElementById('formEditar');
-    const msgBusca = document.getElementById('statusBusca');
-    const msgEditar = document.getElementById('mensagemEditar');
-
-    btnBuscar.addEventListener('click', async () => {
-      const id = idBusca.value.trim();
-      if (!id) {
-        msgBusca.textContent = "Informe um ID!";
-        msgBusca.style.color = "red";
-        return;
-      }
-
-      msgBusca.textContent = "Buscando...";
-      try {
-        const res = await fetch(`http://localhost:5287/albuns/${id}`);
-        if (!res.ok) throw new Error("Álbum não encontrado");
-        const album = await res.json();
-
-        nome.value = album.nome || "";
-        artistas.value = album.artistas || "";
-        generos.value = album.generos || "";
-        colaboradores.value = album.colaboradores || "";
-        dataLancamento.value = album.dataLancamento ? album.dataLancamento.substring(0,10) : "";
-        numeroFaixas.value = album.numeroFaixas || "";
-        duracao.value = album.duracao || "";
-        gravadora.value = album.gravadora || "";
-        formato.value = album.formato || "";
-
-        formEditar.style.display = "block";
-        msgBusca.textContent = "";
-      } catch (err) {
-        msgBusca.textContent = err.message;
-        msgBusca.style.color = "red";
-        formEditar.style.display = "none";
-      }
-    });
-
-    document.getElementById('btnSalvar').addEventListener('click', async () => {
-      const id = idBusca.value.trim();
-      if (!id) return;
-
-      const dados = {
-        nome: nome.value,
-        artistas: artistas.value,
-        generos: generos.value,
-        colaboradores: colaboradores.value,
-        dataLancamento: dataLancamento.value,
-        numeroFaixas: Number(numeroFaixas.value) || 0,
-        duracao: duracao.value,
-        gravadora: gravadora.value,
-        formato: formato.value
-      };
-
-      const todosPreenchidos = Object.values(dados).every(v => v !== "" && v !== 0);
-
-      let resultado;
-      if (todosPreenchidos) {
-        resultado = await putAlbum(id, dados); // atualização completa
-      } else {
-        // envia apenas os campos preenchidos
-        const alteracoes = {};
-        for (const key in dados) {
-          if (dados[key] !== "" && dados[key] !== 0) alteracoes[key] = dados[key];
-        }
-        resultado = await patchAlbum(id, alteracoes); // atualização parcial
-      }
-
-      if (resultado) {
-        msgEditar.textContent = "Álbum atualizado com sucesso!";
-      } else {
-        msgEditar.textContent = "Erro ao atualizar o álbum.";
-      }
-    });
-  </script>
 </body>
 </html>
