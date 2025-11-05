@@ -257,7 +257,7 @@ function configurarFormularioNovoAlbum() {
             form.reset();
             
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = './index.html';
             }, 2000);
             
         } else {
@@ -266,11 +266,6 @@ function configurarFormularioNovoAlbum() {
         }
     });
 }
-
-// faz qnd a pag carrega
-document.addEventListener('DOMContentLoaded', function() {
-    configurarFormularioNovoAlbum();
-});
 
 // config editar album
 function configurarPaginaEditar() {
@@ -307,7 +302,7 @@ function configurarPaginaEditar() {
                 document.getElementById('formato').value = album.formato || "";
 
                 formEditar.style.display = "block";
-                msgBusca.textContent = "Álbum encontrado!";
+                msgBusca.textContent = "Preencha os campos a alterar!";
                 msgBusca.style.color = "#254935";
             } else {
                 throw new Error("Álbum não encontrado");
@@ -319,7 +314,10 @@ function configurarPaginaEditar() {
         }
     });
 
-    document.getElementById('btnSalvar').addEventListener('click', async () => {
+    // --- corrigido aqui ---
+    document.getElementById('btnSalvar').addEventListener('click', async (e) => {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
         const id = document.getElementById('idBusca').value.trim();
         if (!id) return;
 
@@ -339,19 +337,23 @@ function configurarPaginaEditar() {
 
         let resultado;
         if (todosPreenchidos) {
-            resultado = await putAlbum(id, dados); // atualização completa
+            resultado = await putAlbum(id, dados);
         } else {
-            // envia apenas os campos preenchidos
             const alteracoes = {};
             for (const key in dados) {
                 if (dados[key] !== "" && dados[key] !== 0) alteracoes[key] = dados[key];
             }
-            resultado = await patchAlbum(id, alteracoes); // atualização parcial
+            resultado = await patchAlbum(id, alteracoes);
         }
 
         if (resultado) {
-            msgEditar.textContent = "Álbum atualizado com sucesso!";
+            msgEditar.textContent = "Álbum atualizado com sucesso! Redirecionando...";
             msgEditar.style.color = "#254935";
+
+            setTimeout(() => {
+                window.location.replace('/index.html');
+            }, 1000);
+
         } else {
             msgEditar.textContent = "Erro ao atualizar o álbum.";
             msgEditar.style.color = "red";
@@ -359,6 +361,7 @@ function configurarPaginaEditar() {
     });
 }
 
+// 🔹 único listener necessário
 document.addEventListener('DOMContentLoaded', function() {
     configurarFormularioNovoAlbum();
     configurarPaginaEditar();
